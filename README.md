@@ -1,2 +1,2 @@
 # LeagueOfLegentAPI
-analys a game
+Analys a game
