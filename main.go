@@ -1,18 +1,20 @@
 package main
 
 import (
-      "net/http"
-
+	"fmt"
+	"log"
+	"net/http"
 )
 
-      func main() {
-             resp, err := http.Get("https://127.0.0.1:2999/liveclientdata/activeplayer")
+func api(url string) {
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(response)
+}
 
-      if err != nil {
-        // handle error
-       }
-      defer resp.Body.Close()
-
-                           
-                
+func main() {
+	url := "https://127.0.0.1:2999/liveclientdata/activeplayer"
+	api(url)
 }
