@@ -1,11 +1,13 @@
 package main
 
 import (
+        "encoding/json"
 	"fmt"
+	"time"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
+
 )
 
 const https = "https://euw1.api.riotgames.com"
@@ -18,6 +20,10 @@ const tagLine = "EUW"
 const gameName = "mouton211"
 
 // 20 requests every 1 seconds(s) & 100 requests every 2 minutes(s)
+type playerData struct {
+    Level string
+    Name string
+}
 
 func apiprofil(urlprofil string) {
 	response, err := http.Get(urlprofil)
@@ -29,13 +35,13 @@ func apiprofil(urlprofil string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(string(body))
+	apiData:=playerData{}
+        err=json.Unmarshal(body,&apiData)
 
-	levels := strings.Split(string(body), ",")
-	level := strings.Split(levels[6], ":")
-
-	fmt.Println(levels[6])
-	fmt.Println(level[1])
+        if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(apiData)
 
 }
 
@@ -54,6 +60,7 @@ func apiprofil(urlprofil string) {
 
 }*/
 func main() {
+    for{
 	urlprofil := https + "/lol/summoner/v4/summoners/by-name/" + gameName + APIkey
 	//urlclient := "https://127.0.0.1:2999/liveclientdata/allgamedata"
 
@@ -68,5 +75,8 @@ func main() {
 	fmt.Println()
 
 	fmt.Println("###########################################################")
+	
 	fmt.Println()
+	time.Sleep(100*time.Millisecond)
+    }
 }
