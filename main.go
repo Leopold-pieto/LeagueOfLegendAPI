@@ -1,13 +1,12 @@
 package main
 
 import (
-        "encoding/json"
+	"encoding/json"
 	"fmt"
-	"time"
 	"io/ioutil"
 	"log"
 	"net/http"
-
+	"time"
 )
 
 const https = "https://euw1.api.riotgames.com"
@@ -21,8 +20,8 @@ const gameName = "mouton211"
 
 // 20 requests every 1 seconds(s) & 100 requests every 2 minutes(s)
 type playerData struct {
-    Level string
-    Name string
+	Level string
+	Name  string
 }
 
 func apiprofil(urlprofil string) {
@@ -35,10 +34,10 @@ func apiprofil(urlprofil string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	apiData:=playerData{}
-        err=json.Unmarshal(body,&apiData)
+	apiData := playerData{}
+	err = json.Unmarshal(body, &apiData)
 
-        if err != nil {
+	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(apiData)
@@ -60,23 +59,23 @@ func apiprofil(urlprofil string) {
 
 }*/
 func main() {
-    for{
-	urlprofil := https + "/lol/summoner/v4/summoners/by-name/" + gameName + APIkey
-	//urlclient := "https://127.0.0.1:2999/liveclientdata/allgamedata"
+	for {
+		urlprofil := https + "/lol/summoner/v4/summoners/by-name/" + gameName + APIkey
+		//urlclient := "https://127.0.0.1:2999/liveclientdata/allgamedata"
 
-	apiprofil(urlprofil)
-	fmt.Println()
-	//apiclient(urlclient)
+		apiprofil(urlprofil)
+		fmt.Println()
+		//apiclient(urlclient)
 
-	fmt.Println("###########################################################")
-	fmt.Println()
+		fmt.Println("###########################################################")
+		fmt.Println()
 
-	fmt.Println("Nom du joueur:", gameName, "  Niveaux", "  Serveur:", tagLine)
-	fmt.Println()
+		fmt.Println("Nom du joueur:", gameName, "  Niveaux", "  Serveur:", tagLine)
+		fmt.Println()
 
-	fmt.Println("###########################################################")
-	
-	fmt.Println()
-	time.Sleep(100*time.Millisecond)
-    }
+		fmt.Println("###########################################################")
+
+		fmt.Println()
+		time.Sleep(100 * time.Millisecond)
+	}
 }
