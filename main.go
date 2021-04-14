@@ -13,6 +13,7 @@ const https = "https://euw1.api.riotgames.com"
 const APIkey = "?api_key=RGAPI-549361bd-d625-4629-b7c2-dc246de49620" //valable 24h
 const accountId = "D8lq_rQ9lXxYdl867SpZMRo6UqH7fAJ3hmaQSJ8sbqlPrV8"
 const puuid = "Y6dqJmXGwwagdqXz27gSpv5Mf_J5xZ2owmIcpek6LLvJnSJ0nPwCY984LzDWIomm1omlLIShODcenw"
+
 const tagLine = "EUW"
 const gameName = "mouton211"
 
