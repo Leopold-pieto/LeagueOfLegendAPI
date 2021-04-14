@@ -2,26 +2,62 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
 
 const https = "https://euw1.api.riotgames.com"
-const path = "/lol/summoner/v1/summoners/by-name/mouton211"
-const APIkey = "?api_key=RGAPI-d2a846d6-a608-453a-9c5d-3ecbc0a1c3d1" //valable 24h
 
-func api(url string) {
-	response, err := http.Get(url)
+const APIkey = "?api_key=RGAPI-d2a846d6-a608-453a-9c5d-3ecbc0a1c3d1" //valable 24h
+const accountId = "D8lq_rQ9lXxYdl867SpZMRo6UqH7fAJ3hmaQSJ8sbqlPrV8"
+const puuid = "Y6dqJmXGwwagdqXz27gSpv5Mf_J5xZ2owmIcpek6LLvJnSJ0nPwCY984LzDWIomm1omlLIShODcenw"
+const tagLine = "EUW"
+const gameName = "mouton211"
+
+// 20 requests every 1 seconds(s) & 100 requests every 2 minutes(s)
+
+func apiprofil(urlprofil string) {
+	response, err := http.Get(urlprofil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(response)
-}
 
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(string(body))
+}
+func apiclient(urlclient string) {
+
+	response, err := http.Get(urlclient)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(response, string(body))
+
+}
 func main() {
-	url := https + path + APIkey
-	fmt.Println(url)
+	urlprofil := https + "/lol/summoner/v4/summoners/by-name/" + gameName + APIkey
+	urlclient := "https://127.0.0.1:2999/liveclientdata/allgamedata"
+	apiprofil(urlprofil)
+	fmt.Println()
+	apiclient(urlclient)
+
 	fmt.Println()
 
-	api(url)
+	fmt.Println("###########################################################")
+	fmt.Println()
+
+	fmt.Println("Nom du joueur:", gameName, "  Niveaux", "  Serveur:", tagLine)
+	fmt.Println()
+
+	fmt.Println("###########################################################")
+	fmt.Println()
 }
