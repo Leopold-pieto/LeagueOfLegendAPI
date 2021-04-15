@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -32,7 +33,6 @@ func apiProfil(urlprofil string) playerData {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(string(body))
 
 	apiData := playerData{}
 	err = json.Unmarshal(body, &apiData)
@@ -44,16 +44,20 @@ func apiProfil(urlprofil string) playerData {
 }
 
 func apiStat(urlstat string) {
-	response, err := http.Get(urlstat)
+
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+	response, err := http.Get("https://127.0.0.1:2999/liveclientdata/allgamedata")
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	body, err := ioutil.ReadAll(response.Body)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(response, string(body))
+
 }
 
 func main() {
