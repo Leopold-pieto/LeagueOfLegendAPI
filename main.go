@@ -22,6 +22,10 @@ type playerData struct {
 	SummonerLevel int16
 	Name          string
 }
+type gameData struct {
+	CurrentGold float64
+	GameTime    float64
+}
 
 func apiProfil(urlprofil string) playerData {
 	response, err := http.Get(urlprofil)
@@ -43,10 +47,11 @@ func apiProfil(urlprofil string) playerData {
 	return apiData
 }
 
-func apiStat(urlstat string) {
+func apiGold(urlgold string) gameData {
 
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
-	response, err := http.Get("https://127.0.0.1:2999/liveclientdata/allgamedata")
+
+	response, err := http.Get("https://127.0.0.1:2999/liveclientdata/activeplayer")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -56,7 +61,31 @@ func apiStat(urlstat string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(response, string(body))
+	goldData := gameData{}
+	err = json.Unmarshal(body, &goldData)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return goldData
+}
+func apitime(urltime string) gameData {
+
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+
+	response, err := http.Get("https://127.0.0.1:2999/liveclientdata/gamestats")
+	if err != nil {
+		log.Fatal(err)
+	}
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	timeData := gameData{}
+	err = json.Unmarshal(body, &timeData)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return timeData
 
 }
 
@@ -65,11 +94,15 @@ func main() {
 		urlprofil := https + "/lol/summoner/v4/summoners/by-name/" + gameName + APIkey
 		playerInfo := apiProfil(urlprofil)
 
-		urlstat := "https://127.0.0.1:2999/liveclientdata/allgamedata"
-		apiStat(urlstat)
+		urlgold := "https://127.0.0.1:2999/liveclientdata/activeplayer"
+		playerGold := apiGold(urlgold)
+
+		urltime := "https://127.0.0.1:2999/liveclientdata/gamestats"
+		gameTime := apitime(urltime)
 
 		fmt.Println("###########################################################")
 		fmt.Println("Nom du joueur:", playerInfo.Name, "  Niveau:", playerInfo.SummonerLevel, "  Serveur:", tagLine)
+		fmt.Println("temps de jeu en seconde:", gameTime.GameTime, "Gold gagné:", playerGold.CurrentGold)
 		fmt.Println("###########################################################")
 		fmt.Println()
 		time.Sleep(100 * time.Millisecond)
