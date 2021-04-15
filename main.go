@@ -51,7 +51,7 @@ func apiGold(urlgold string) gameData {
 
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
-	response, err := http.Get("https://127.0.0.1:2999/liveclientdata/activeplayer")
+	response, err := http.Get(urlgold)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,7 +72,7 @@ func apitime(urltime string) gameData {
 
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
-	response, err := http.Get("https://127.0.0.1:2999/liveclientdata/gamestats")
+	response, err := http.Get(urltime)
 	if err != nil {
 		log.Fatal(err)
 	}
