@@ -20,6 +20,7 @@ const gameName = "mouton211"
 type playerData struct {
 	SummonerLevel int16
 	Name          string
+
 }
 
 func apiprofil(urlprofil string) playerData {
@@ -35,32 +36,23 @@ func apiprofil(urlprofil string) playerData {
 
 	apiData := playerData{}
 	err = json.Unmarshal(body, &apiData)
-
 	if err != nil {
 		log.Fatal(err)
 	}
+  
 	fmt.Println(apiData)
 	return apiData
 }
 
 func main() {
 	for {
-		//level:=SummonerLevel
-		//name:=Name
-
 		urlprofil := https + "/lol/summoner/v4/summoners/by-name/" + gameName + APIkey
-
 		apiprofil(urlprofil)
-		fmt.Println()
 
 		fmt.Println("###########################################################")
-		fmt.Println()
-
 		fmt.Println("Nom du joueur:", "  Niveau:", summonerLevel, "  Serveur:", tagLine)
-		fmt.Println()
-
 		fmt.Println("###########################################################")
-
+		fmt.Println()
 		time.Sleep(100 * time.Millisecond)
 	}
 }
