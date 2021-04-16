@@ -8,10 +8,12 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/guptarohit/asciigraph"
 )
 
 const https = "https://euw1.api.riotgames.com"
-const APIkey = "?api_key=RGAPI-6c5f3688-5786-4b0b-b6cd-b319482d0e96" //valable 24h
+const APIkey = "?api_key=RGAPI-a6d2ed4e-5095-4d41-9aca-747211a12ae3" //valable 24h
 const accountId = "D8lq_rQ9lXxYdl867SpZMRo6UqH7fAJ3hmaQSJ8sbqlPrV8"
 const puuid = "Y6dqJmXGwwagdqXz27gSpv5Mf_J5xZ2owmIcpek6LLvJnSJ0nPwCY984LzDWIomm1omlLIShODcenw"
 const tagLine = "EUW"
@@ -23,7 +25,7 @@ type playerData struct {
 	Name          string
 }
 type gameData struct {
-	CurrentGold float64
+	CurrentGold []float64
 	GameTime    float64
 }
 
@@ -88,6 +90,11 @@ func apitime(urltime string) gameData {
 	return timeData
 
 }
+func graph(gold []float64) {
+
+	graph := asciigraph.Plot(gold)
+	fmt.Println(graph)
+}
 
 func main() {
 	for {
@@ -102,9 +109,13 @@ func main() {
 
 		fmt.Println("###########################################################")
 		fmt.Println("Nom du joueur:", playerInfo.Name, "  Niveau:", playerInfo.SummonerLevel, "  Serveur:", tagLine)
-		fmt.Println("temps de jeu en seconde:", gameTime.GameTime, "Gold gagné:", playerGold.CurrentGold)
+		fmt.Println("temps de jeu en seconde:", gameTime.GameTime, "Gold gagné", playerGold.CurrentGold)
 		fmt.Println("###########################################################")
+		var gold []float64
+		var g gameData
+		gold = g.CurrentGold
+		graph(gold)
 		fmt.Println()
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(500 * time.Millisecond)
 	}
 }
