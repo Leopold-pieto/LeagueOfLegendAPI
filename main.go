@@ -25,7 +25,7 @@ type playerData struct {
 	Name          string
 }
 type gameData struct {
-	CurrentGold []float64
+	CurrentGold float64
 	GameTime    float64
 }
 
@@ -90,11 +90,11 @@ func apitime(urltime string) gameData {
 	return timeData
 
 }
-func graph(gold []float64) {
+/*func graph(gold []float64) {
 
 	graph := asciigraph.Plot(gold)
 	fmt.Println(graph)
-}
+}*/
 
 func main() {
 	for {
@@ -111,10 +111,10 @@ func main() {
 		fmt.Println("Nom du joueur:", playerInfo.Name, "  Niveau:", playerInfo.SummonerLevel, "  Serveur:", tagLine)
 		fmt.Println("temps de jeu en seconde:", gameTime.GameTime, "Gold gagné", playerGold.CurrentGold)
 		fmt.Println("###########################################################")
-		var gold []float64
+		/*var gold []float64
 		var g gameData
 		gold = g.CurrentGold
-		graph(gold)
+		graph(gold)*/
 		fmt.Println()
 		time.Sleep(500 * time.Millisecond)
 	}
